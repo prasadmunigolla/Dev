@@ -28,16 +28,14 @@ Alternatively, you can use the Jenkins Credential Binding plugin to securely pas
 */
 
 //SOL
-
-withCredentials([usernamePassword(credentialsId: 'JIRAONCLOUD', passwordVariable: 'jiraapitok', usernameVariable: 'jirauser')]) {
-    sh 'cd /usr/bin/ && \
+withCredentials([usernamePassword(credentialsId: 'JIRAONCLOUD', passwordVariable: 'jiraapitok', usernameVariable: 'jirauser')]){
+     sh 'cd /usr/bin/ && \
         curl --proxy \'http://appproxy.rbsgrp.net:8080\' --request POST \
         --url ' + jurlAttach1 + ' \
         -H "Content-Type: application/json" \
         --user \'' + jirauser + ':' + jiraapitok + '\' \
         -F "file=@/jenkins/jenkinsECP/output/' + apnd + '/' + params.SQ_Project + '-' + env.BUILD_NUMBER + '.zip"'
 }
-
 /*
 -> In this code, the multi-line shell command is enclosed in single-quotes ('), which prevents string interpolation. 
 -> The variables are concatenated using the + operator, and the quotes within the command are escaped with a backslash (\).
